@@ -2,11 +2,12 @@ package models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="cliente")
+@Table(name="clientes")
 public class Cliente {
 	
+	@Id
 	@Column(name="id")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
 	@Column(name="nombre")

@@ -1,9 +1,22 @@
 package models;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name="tecnicos")
 public class Tecnico {
+	
+	@Id
+	@Column(name="id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	
+	@Column(name="nombre")
 	private String nombre;
+	
+	@Column(name="apellido")
 	private String apellido;
+	
+	@Column(name="incidentesResueltos")
 	private int incidentesResueltos;
 	
 	public Tecnico() {

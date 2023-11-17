@@ -1,9 +1,20 @@
 package models;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name="incidentes")
 public class Incidente {
+	
+	@Id
+	@Column(name="id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	
+	@Column(name="tipoIncidente")
 	private String tipoIncidente;
-	private String descripciónIncidente;
+	
+	@Column(name="descripcionIncidente")
+	private String descripcionIncidente;
 	
 	public Incidente() {
 		super();
@@ -12,14 +23,14 @@ public class Incidente {
 	public Incidente(String tipoIncidente, String descripciónIncidente) {
 		super();
 		this.tipoIncidente = tipoIncidente;
-		this.descripciónIncidente = descripciónIncidente;
+		this.descripcionIncidente = descripciónIncidente;
 	}
 
 	public Incidente(int id, String tipoIncidente, String descripciónIncidente) {
 		super();
 		this.id = id;
 		this.tipoIncidente = tipoIncidente;
-		this.descripciónIncidente = descripciónIncidente;
+		this.descripcionIncidente = descripciónIncidente;
 	}
 
 	public int getId() {
@@ -39,11 +50,11 @@ public class Incidente {
 	}
 
 	public String getDescripciónIncidente() {
-		return descripciónIncidente;
+		return descripcionIncidente;
 	}
 
 	public void setDescripciónIncidente(String descripciónIncidente) {
-		this.descripciónIncidente = descripciónIncidente;
+		this.descripcionIncidente = descripciónIncidente;
 	}
 		
 }

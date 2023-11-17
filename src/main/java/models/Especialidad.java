@@ -1,7 +1,16 @@
 package models;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name="especialidades")
 public class Especialidad {
+	
+	@Id
+	@Column(name="id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	
+	@Column(name="tipoEspecialidad")
 	private String tipoEspecialidad;
 	
 	public Especialidad() {
