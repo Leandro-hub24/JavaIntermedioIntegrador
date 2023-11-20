@@ -8,7 +8,7 @@
 		<property name="connection.url">jdbc:mysql://localhost/integradorjava</property>
 		<property name="connection.username">prueba</property>
 		<property name="connection.password">12345</property>
-		<property name="hibernate.hbm2ddl.auto">create</property>
+		<property name="hibernate.hbm2ddl.auto">update</property>
 		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.transaction.jta.platform">true</property>
