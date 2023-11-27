@@ -13,5 +13,7 @@ public class EspecialidadVista {
 		System.out.println("---------------------------\n"+ especialidadLista);
 		
 		System.out.println(especialidadLista.toString());
+		
+		//EspecialidadCont.CrearEspecialidad("Sistema Operativos");
 	}
 }

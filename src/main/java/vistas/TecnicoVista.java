@@ -13,5 +13,8 @@ public class TecnicoVista {
 		System.out.println("---------------------------\n"+ tecnicoLista);
 		
 		System.out.println(tecnicoLista.toString());
+		
+		
+		//TecnicoCont.CrearTecnico("Miguel", "Mendoza", 3);
 	}
 }

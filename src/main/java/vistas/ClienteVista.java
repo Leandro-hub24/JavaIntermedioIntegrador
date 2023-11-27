@@ -13,5 +13,8 @@ public class ClienteVista{
 		System.out.println("---------------------------\n"+ clienteLista);
 		
 		System.out.println(clienteLista.toString());
+		
+		
+		//ClienteCont.CrearCliente("Manuel", "Goméz", 73826451, "Goméz");
 	}
 }

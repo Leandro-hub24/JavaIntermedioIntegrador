@@ -13,5 +13,7 @@ public class ServicioVista {
 		System.out.println("---------------------------\n"+ servicioLista);
 		
 		System.out.println(servicioLista.toString());
+		
+		ServicioCont.CrearServicio("Office");
 	}
 }

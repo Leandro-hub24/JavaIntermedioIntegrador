@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -142,6 +143,39 @@ public class ClienteController {
 		
 		return "Fin de listado de Clientes";
 		
+	}
+	
+public List<Cliente> ListadoClientes() {
+		
+		SessionFactory sessionFactory = new
+				Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Cliente.class).buildSessionFactory();
+		
+		Session session = sessionFactory.openSession();
+		List <Cliente> cliente1 = new ArrayList<Cliente>();
+		try {
+			
+			session.beginTransaction();
+			
+			CriteriaQuery <Cliente> cq = session.getCriteriaBuilder().createQuery(Cliente.class);
+			
+			cq.from(Cliente.class);
+			
+			List <Cliente> cliente = session.createQuery(cq).getResultList();
+		
+			for (Cliente u : cliente) {
+				cliente1.add(new Cliente(u.getId(), u.getNombre(), u.getApellido(), u.getCuit(), u.getRazonSocial()));
+				}
+		
+			sessionFactory.close();
+			
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+		}
+		
+	return cliente1;
 	}
 
 }
