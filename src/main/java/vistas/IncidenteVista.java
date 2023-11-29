@@ -14,6 +14,6 @@ public class IncidenteVista {
 		
 		System.out.println(incidenteLista.toString());
 		
-		//IncidenteCont.CrearIncidente("Error de Ejecucion", "sadhfashn oadsfkjbLKJASsd as{idfha{dshf afp{jhn {i");
+		//IncidenteCont.CrearIncidente("Error de Ejecucion", "sadhfashn oadsfkjbLKJASsd as{idfha{dshf afp{jhn {i", 1, 1);
 	}
 }

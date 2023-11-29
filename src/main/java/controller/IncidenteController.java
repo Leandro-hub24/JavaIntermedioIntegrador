@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -7,11 +8,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import jakarta.persistence.criteria.CriteriaQuery;
+import models.Cliente;
 import models.Incidente;
+import controller.TecnicoController;
 
 public class IncidenteController {
 
-public String CrearIncidente(String tipoIncidente, String descripcionIncidente) {
+public String CrearIncidente(String tipoIncidente, String descripcionIncidente, int idCliente, int idTecnico) {
 		
 		SessionFactory sessionFactory = new
 				Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Incidente.class).buildSessionFactory();
@@ -20,7 +23,7 @@ public String CrearIncidente(String tipoIncidente, String descripcionIncidente) 
 		
 		try {
 			
-			Incidente incidente = new Incidente(tipoIncidente, descripcionIncidente);
+			Incidente incidente = new Incidente(tipoIncidente, descripcionIncidente, idCliente, idTecnico);
 			session.beginTransaction();
 			session.persist(incidente);
 			session.getTransaction().commit();
@@ -57,19 +60,30 @@ public String CrearIncidente(String tipoIncidente, String descripcionIncidente) 
 		return "Error al intentar eliminar el incidente";
 	}
 	
-	public String ActualizarIncidente(int id, String tipoIncidente, String descripcionIncidente) {
+	public String ActualizarIncidente(int id, int idCli, int idTec, String tipoIncidente, String descripcionIncidente) {
 		
 		SessionFactory sessionFactory = new
 				Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Incidente.class).buildSessionFactory();
 		
 		Session session = sessionFactory.openSession();
 		
+		TecnicoController TecnicoCont = new TecnicoController();
+		
+		int a;
+		
 		try {
 			
 			session.beginTransaction();
 			Incidente incidente = session.get(Incidente.class, id);
+			a = incidente.getIdTecnico();
+			if(idTec != a) {
+				incidente.setIdTecnico(idTec);
+				TecnicoCont.ActTecnicoInci(a, -1);
+				TecnicoCont.ActTecnicoInci(idTec, 1);
+			}
+			incidente.setIdCliente(idCli);		
 			incidente.setTipoIncidente(tipoIncidente);
-			incidente.setDescripciónIncidente(descripcionIncidente);
+			incidente.setDescripcionIncidente(descripcionIncidente);
 			session.getTransaction().commit();
 			sessionFactory.close();
 			
@@ -127,7 +141,7 @@ public String CrearIncidente(String tipoIncidente, String descripcionIncidente) 
 				System.out.println("INCIDENTE: "+u+"\n");
 				System.out.println("ID: "+u.getId()+"\n");
 				System.out.println("TIPO: "+u.getTipoIncidente()+"\n");
-				System.out.println("DESCRIPCIÓN: "+u.getDescripciónIncidente()+"\n----------------------------------------");
+				System.out.println("DESCRIPCIÓN: "+u.getDescripcionIncidente()+"\n----------------------------------------");
 			}
 			
 			sessionFactory.close();
@@ -140,5 +154,38 @@ public String CrearIncidente(String tipoIncidente, String descripcionIncidente) 
 		
 		return "Fin de listado de incidentes";
 		
+	}
+	
+public List<Incidente> ListadoIncidentes() {
+		
+		SessionFactory sessionFactory = new
+				Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Incidente.class).buildSessionFactory();
+		
+		Session session = sessionFactory.openSession();
+		List <Incidente> incidente1 = new ArrayList<Incidente>();
+		try {
+			
+			session.beginTransaction();
+			
+			CriteriaQuery <Incidente> cq = session.getCriteriaBuilder().createQuery(Incidente.class);
+			
+			cq.from(Incidente.class);
+			
+			List <Incidente> incidente = session.createQuery(cq).getResultList();
+		
+			for (Incidente u : incidente) {
+				incidente1.add(new Incidente(u.getId(), u.getTipoIncidente(), u.getDescripcionIncidente(), u.getIdCliente(), u.getIdTecnico()));
+				}
+		
+			sessionFactory.close();
+			
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+		}
+		
+	return incidente1;
 	}
 }

@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -7,11 +8,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import jakarta.persistence.criteria.CriteriaQuery;
+import models.Cliente;
 import models.Tecnico;
 
 public class TecnicoController {
 
-public String CrearTecnico(String nombre, String apellido, int incidentesResueltos) {
+public String CrearTecnico(String nombre, String apellido) {
 		
 		SessionFactory sessionFactory = new
 				Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Tecnico.class).buildSessionFactory();
@@ -20,7 +22,7 @@ public String CrearTecnico(String nombre, String apellido, int incidentesResuelt
 		
 		try {
 			
-			Tecnico tecnico = new Tecnico(nombre, apellido, incidentesResueltos);
+			Tecnico tecnico = new Tecnico(nombre, apellido);
 			session.beginTransaction();
 			session.persist(tecnico);
 			session.getTransaction().commit();
@@ -57,7 +59,7 @@ public String CrearTecnico(String nombre, String apellido, int incidentesResuelt
 		return "Error al intentar eliminar el tecnico";
 	}
 	
-	public String ActualizarTecnico(int id, String nombre, String apellido, int incidentesResueltos) {
+	public String ActualizarTecnico(int id, String nombre, String apellido) {
 		
 		SessionFactory sessionFactory = new
 				Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Tecnico.class).buildSessionFactory();
@@ -70,7 +72,30 @@ public String CrearTecnico(String nombre, String apellido, int incidentesResuelt
 			Tecnico tecnico = session.get(Tecnico.class, id);
 			tecnico.setNombre(nombre);
 			tecnico.setApellido(apellido);
-			tecnico.setIncidentesResueltos(incidentesResueltos);
+			session.getTransaction().commit();
+			sessionFactory.close();
+			
+			return "Tecnico ID: "+id+" actualizado en el sistema\n--------\n"+tecnico.toString();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		
+		return "Error al intentar actualizar el tecnico";
+	}
+	
+public String ActTecnicoInci(int id, int a) {
+		
+		SessionFactory sessionFactory = new
+				Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Tecnico.class).buildSessionFactory();
+		
+		Session session = sessionFactory.openSession();
+		int cant;
+		try {
+			
+			session.beginTransaction();
+			Tecnico tecnico = session.get(Tecnico.class, id);
+			cant = tecnico.getIncidentesResueltos();
+			tecnico.setIncidentesResueltos(cant+a);
 			session.getTransaction().commit();
 			sessionFactory.close();
 			
@@ -142,5 +167,38 @@ public String CrearTecnico(String nombre, String apellido, int incidentesResuelt
 		
 		return "Fin de listado de Tecnicos";
 		
+	}
+	
+public List<Tecnico> ListadoTecnicos() {
+		
+		SessionFactory sessionFactory = new
+				Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Tecnico.class).buildSessionFactory();
+		
+		Session session = sessionFactory.openSession();
+		List <Tecnico> tecnico1 = new ArrayList<Tecnico>();
+		try {
+			
+			session.beginTransaction();
+			
+			CriteriaQuery <Tecnico> cq = session.getCriteriaBuilder().createQuery(Tecnico.class);
+			
+			cq.from(Tecnico.class);
+			
+			List <Tecnico> tecnico = session.createQuery(cq).getResultList();
+		
+			for (Tecnico u : tecnico) {
+				tecnico1.add(new Tecnico(u.getId(), u.getNombre(), u.getApellido(), u.getIncidentesResueltos()));
+				}
+		
+			sessionFactory.close();
+			
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+		}
+		
+	return tecnico1;
 	}
 }

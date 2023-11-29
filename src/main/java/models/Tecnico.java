@@ -23,6 +23,16 @@ public class Tecnico {
 		super();
 	}
 	
+	
+	
+	public Tecnico(String nombre, String apellido) {
+		super();
+		this.nombre = nombre;
+		this.apellido = apellido;
+	}
+
+
+
 	public Tecnico(String nombre, String apellido, int incidentesResueltos) {
 		super();
 		this.nombre = nombre;

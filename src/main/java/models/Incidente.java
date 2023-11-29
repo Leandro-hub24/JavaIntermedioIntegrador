@@ -16,6 +16,12 @@ public class Incidente {
 	@Column(name="descripcionIncidente")
 	private String descripcionIncidente;
 	
+	@Column(name="idCliente")
+	private int idCliente;
+	
+	@Column(name="idTecnico")
+	private int idTecnico;
+	
 	public Incidente() {
 		super();
 	}
@@ -26,11 +32,21 @@ public class Incidente {
 		this.descripcionIncidente = descripciónIncidente;
 	}
 
-	public Incidente(int id, String tipoIncidente, String descripciónIncidente) {
+	public Incidente(String tipoIncidente, String descripcionIncidente, int idCliente, int idTecnico) {
+		super();
+		this.tipoIncidente = tipoIncidente;
+		this.descripcionIncidente = descripcionIncidente;
+		this.idCliente = idCliente;
+		this.idTecnico = idTecnico;
+	}
+
+	public Incidente(int id, String tipoIncidente, String descripcionIncidente, int idCliente, int idTecnico) {
 		super();
 		this.id = id;
 		this.tipoIncidente = tipoIncidente;
-		this.descripcionIncidente = descripciónIncidente;
+		this.descripcionIncidente = descripcionIncidente;
+		this.idCliente = idCliente;
+		this.idTecnico = idTecnico;
 	}
 
 	public int getId() {
@@ -49,12 +65,30 @@ public class Incidente {
 		this.tipoIncidente = tipoIncidente;
 	}
 
-	public String getDescripciónIncidente() {
+	public String getDescripcionIncidente() {
 		return descripcionIncidente;
 	}
 
-	public void setDescripciónIncidente(String descripciónIncidente) {
-		this.descripcionIncidente = descripciónIncidente;
+	public void setDescripcionIncidente(String descripcionIncidente) {
+		this.descripcionIncidente = descripcionIncidente;
 	}
+
+	public int getIdCliente() {
+		return idCliente;
+	}
+
+	public void setIdCliente(int idCliente) {
+		this.idCliente = idCliente;
+	}
+
+	public int getIdTecnico() {
+		return idTecnico;
+	}
+
+	public void setIdTecnico(int idTecnico) {
+		this.idTecnico = idTecnico;
+	}
+	
+	
 		
 }
